@@ -1,0 +1,51 @@
+<!doctype html>
+<!--[if IE 7]>         <html class='no-js lt-ie9 lt-ie8' id='ng-app' ng-app=''> <![endif]-->
+<!--[if IE 8]>         <html class='no-js lt-ie9' id='ng-app' ng-app=''> <![endif]-->
+<!--[if gt IE 8]><!--><html class='no-js' ng-app='dummyApp' ng-controller='DummyCtrl'> <!--<![endif]-->
+  <head>
+    <meta charset='utf-8'>
+  </head>
+  <body>
+    <script src='../bower_components/jquery/dist/jquery.js'></script>
+    <script src='../bower_components/angular/angular.js'></script>
+
+    <script>
+      //<![CDATA[ 
+
+      var app = angular.module('dummyApp', []);
+      app.config(function($locationProvider){
+          $locationProvider.html5Mode(true).hashPrefix('!');
+      });
+      app.controller('DummyCtrl', ['$scope', '$location', '$http', function($scope, $location, $http){
+        var qs = $location.search();
+        var url = (qs.url.split('/'));
+        url.shift();
+        
+        var prefix = '/dummy/';
+        var path = '';
+console.log($http.defaults);
+        if(url[0] === 'greennuts' && url[1] === 'articles' && url[2] && url[2].length > 0) {
+          if(url[3] === 'like'){
+            path += 'greennuts/article/like';
+          } else {
+            path += 'greennuts/article';
+          }
+        }
+        
+        console.log(path);
+
+return false;
+        if(path === '') {
+          path = qs.url;
+        }
+        
+        if(path) {
+          $location.url( prefix + path + '.json' );
+        }
+      }]);
+      //]]>
+      
+
+    </script>
+  </body>
+</html>
